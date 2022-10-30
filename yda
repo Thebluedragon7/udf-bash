@@ -1,0 +1,26 @@
+#!/bin/bash
+
+downloadPath="$HOME/Music"
+
+help() {
+	echo "Audio Downloader - Scripted by thebluedragon"
+	echo "usage:	yda <args>"
+}
+
+
+getPath() {
+	if [ -z $1 ]; then
+		echo "$downloadPath/"
+	else
+		echo "$downloadPath/$1/"
+	fi
+}
+
+
+if [ -z $1 ];then
+	help
+else
+	read -p "[+] save to ($downloadPath): " input
+	finalPath="$(getPath $input)"
+	yt-dlp --extract-audio --audio-format mp3 -o "$finalPath%(title)s.%(ext)s" $@
+fi
